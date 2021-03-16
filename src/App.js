@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Form from "./Form";
 import Notes from "./Notes";
 
 const App = (props) => {
@@ -28,11 +29,12 @@ const App = (props) => {
 		<div>
 			<h1>Notes</h1>
 			<button onClick={() => setShowAll(!showAll)}>Filtrar</button>
-			<Notes notesToShow={notesToShow}/>
-			<form onSubmit={handleClick}>
-				<input value={newNote} type='text' onChange={handleChange} />
-				<button type='submit'>Crear nota</button>
-			</form>
+			<Notes notesToShow={notesToShow} />
+			<Form
+				handleClick={handleClick}
+				newNote={newNote}
+				handleChange={handleChange}
+			/>
 		</div>
 	);
 };
