@@ -1,42 +1,47 @@
-import React, { useState } from "react";
-import Form from "./Form";
-import Notes from "./Notes";
+import React, { useState, useEffect } from 'react'
+import Form from './Form'
+import Notes from './Notes'
+import { createNote, getAllNotes } from './services/notes'
 
-const App = (props) => {
-	const [notes, setNotes] = useState(props.notes);
-	const [newNote, setNewNote] = useState("");
-	const [showAll, setShowAll] = useState(true);
-	const handleChange = (event) => {
-		setNewNote(event.target.value);
-	};
+const App = () => {
+  const [notes, setNotes] = useState([])
+  const [newNote, setNewNote] = useState('')
+  const handleChange = event => {
+    setNewNote(event.target.value)
+  }
 
-	const handleClick = (event) => {
-		event.preventDefault();
-		const noteToAddToState = {
-			id: notes.length + 1,
-			content: newNote,
-			date: new Date().toISOString(),
-			important: Math.random() < 0.5,
-		};
-		setNotes((prevNotes) => prevNotes.concat(noteToAddToState));
-		setNewNote("");
-	};
-	const notesToShow = showAll
-		? notes
-		: notes.filter((note) => note.important === true);
+  useEffect(() => {
+    getAllNotes().then(notes => {
+      setNotes(notes)
+    })
+  }, [])
 
-	return (
-		<div>
-			<h1>Notes</h1>
-			<button onClick={() => setShowAll(!showAll)}>Filtrar</button>
-			<Notes notesToShow={notesToShow} />
-			<Form
-				handleClick={handleClick}
-				newNote={newNote}
-				handleChange={handleChange}
-			/>
-		</div>
-	);
-};
+  const handleClick = event => {
+    event.preventDefault()
+    const noteToAddToState = {
+      title: newNote,
+      body: newNote,
+    }
 
-export default App;
+    createNote(noteToAddToState).then(notes => {
+      setNotes(prevNotes => prevNotes.concat(notes))
+    })
+
+    // setNotes((prevNotes) => prevNotes.concat(noteToAddToState));
+
+    setNewNote('')
+  }
+
+  return (
+    <div>
+      <Form
+        handleClick={handleClick}
+        newNote={newNote}
+        handleChange={handleChange}
+      />
+      <Notes notes={notes} />
+    </div>
+  )
+}
+
+export default App

@@ -1,11 +1,25 @@
 import React from "react";
 
-const Form = ({handleClick, newNote, handleChange}) => {
+const Form = ({ handleClick, newNote, handleChange }) => {
 	return (
-		<form onSubmit={handleClick}>
-			<input value={newNote} type='text' onChange={handleChange} />
-			<button type='submit'>Crear nota</button>
-		</form>
+		<div
+			style={{
+				position: "fixed",
+				top: "0px",
+				left: "0",
+				backgroundColor: "white",
+				display: "flex",
+				alignItems: "center",
+				zIndex: "100",
+				border: "1px solid gray",
+				padding: "10px",
+			}}>
+			<h1 style={{ paddingRight: "10px" }}>Notes</h1>
+			<form onSubmit={handleClick}>
+				<input value={newNote} type='text' onChange={handleChange} />
+				<button type='submit'>Crear nota</button>
+			</form>
+		</div>
 	);
 };
 
