@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Notification from './components/Notification'
-import Note from './Note'
+import Note from './components/Note'
 import NoteForm from './components/NoteForm'
 import loginService from './services/login'
 import noteService from './services/notes'
